@@ -1,6 +1,6 @@
 .PHONY:docker-build
 docker-build: test
-	docker build -t proxy --ssh default .
+	docker build -t ingressgateway .
 
 .PHONY:docker-run
 docker-run:
