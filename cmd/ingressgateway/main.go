@@ -3,16 +3,24 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+	"os/signal"
+
+	"github.com/picop-rd/ingressgateway/app/ingressgateway"
 )
 
 func main() {
-	port := flag.String("port", "8080", "port to serve on")
+	port := flag.String("port", "8000", "port to serve on")
 	envID := flag.String("env-id", "", "environment to route connections")
-	defaultAddr := flag.String("default-addr", "", "default address")
+	destination := flag.String("destination", "", "destination address")
 
 	flag.Parse()
 
-	fmt.Println("port:", *port)
-	fmt.Println("env-id:", *envID)
-	fmt.Println("default-addr:", *defaultAddr)
+	server := ingressgateway.New(*envID, *destination)
+	go server.Start(fmt.Sprintf(":%s", *port))
+	defer server.Close()
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, os.Interrupt)
+	<-quit
 }

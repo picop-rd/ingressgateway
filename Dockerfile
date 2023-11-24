@@ -13,4 +13,4 @@ FROM scratch
 
 COPY --from=builder /ingressgateway /bin/ingressgateway
 ENTRYPOINT [ "/bin/ingressgateway" ]
-
+CMD [ "--port", "8000", "--env-id", "main", "--destination", "localhost:8080"]

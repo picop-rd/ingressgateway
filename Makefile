@@ -4,7 +4,7 @@ docker-build: test
 
 .PHONY:docker-run
 docker-run:
-	docker run -p 9000:9000 -p 9001:9001 ingressgateway
+	docker run -p 8000:8000 ingressgateway
 
 .PHONY:test
 test: vet fmt
